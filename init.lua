@@ -1,1 +1,1 @@
-require('mynvim.bootstrap')
+require('mynvim.bootstrap').run()
