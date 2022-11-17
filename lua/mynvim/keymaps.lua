@@ -28,6 +28,8 @@ function M.setup()
 	keymap('n', '<C-k>', '<C-w>k', opts)
 	keymap('n', '<C-l>', '<C-w>l', opts)
 
+	keymap('n', '<leader>e', ':Lexplore 24<CR>', opts)
+
 	-- clipboard
 	keymap('v', '<C-y>', '"+y', opts)
 	keymap('n', '<C-p>', '"+p', opts)

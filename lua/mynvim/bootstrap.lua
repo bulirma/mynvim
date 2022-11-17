@@ -5,8 +5,7 @@ local prefix = 'mynvim.'
 local modules = {
 	'options',
 	'keymaps',
-	'plugins',
-	'colorscheme'
+	'plugins'
 }
 
 function M.run()
