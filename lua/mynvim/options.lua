@@ -15,7 +15,7 @@ function M.setup()
 	for k, v in pairs(options) do
 		vim.opt[k] = v
 	end
-	vim.cmd('colorscheme lunaperche')
+	vim.cmd('colorscheme desert')
 end
 
 return M

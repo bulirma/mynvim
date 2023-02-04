@@ -14,10 +14,12 @@ function M.setup()
 	vim.g.mapleader = ' '
 	vim.g.maplocalleader = ' '
 
+	keymap('t', '<C-e>', '<C-\\><C-n>', term_opts)
+
 	-- tabs
-	keymap('n', '<tab>n', ':tabnew<CR>', opts)
-	keymap('n', '<tab>k', ':tabp<CR>', opts)
-	keymap('n', '<tab>j', ':tabn<CR>', opts)
+	keymap('n', '<Leader>tn', ':tabnew<CR>', opts)
+	keymap('n', '<Leader>k', ':tabp<CR>', opts)
+	keymap('n', '<Leader>j', ':tabn<CR>', opts)
 
 	-- telescope
 	keymap('n', '<C-f>', ':Telescope find_files<CR>', opts)
@@ -28,7 +30,8 @@ function M.setup()
 	keymap('n', '<C-k>', '<C-w>k', opts)
 	keymap('n', '<C-l>', '<C-w>l', opts)
 
-	keymap('n', '<leader>e', ':Lexplore 24<CR>', opts)
+	keymap('n', '<Leader>e', ':Lexplore 24<CR>', opts)
+	keymap('n', '<Leader>t', ':terminal<CR>', opts)
 
 	-- clipboard
 	keymap('v', '<C-y>', '"+y', opts)

@@ -19,17 +19,17 @@ function M.setup()
 	end
 	
 	-- sync packer whenever this file is updated
-	vim.cmd [[
+	vim.cmd([[
 	  augroup packer_user_config
 	    autocmd!
 	    autocmd BufWritePost plugins.lua source <afile> | PackerSync
 	  augroup end
-	]]
+	]])
 
 	-- safely load packer
 	local ok, packer = pcall(require, 'packer')
 	if not ok then
-		return M
+		return
 	end
 
 	-- init packer
@@ -46,6 +46,11 @@ function M.setup()
 		use('wbthomason/packer.nvim')
 		use('nvim-lua/popup.nvim')
 		use('nvim-lua/plenary.nvim')
+
+		use('hrsh7th/nvim-cmp')
+		use('hrsh7th/cmp-buffer')
+		use('hrsh7th/cmp-path')
+		use('hrsh7th/cmp-cmdline')
 
 		if PACKER_BOOTSTRAP then
 			require('packer').sync()
