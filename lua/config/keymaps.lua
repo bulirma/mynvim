@@ -12,8 +12,8 @@ kmap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 kmap('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_sil)
 kmap('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_sil)
 kmap('n', '<leader>t', ':tabnew<CR>', nrmp_sil)
-kmap('n', '<leader>k', ':tabp<CR>', nrmp_sil)
-kmap('n', '<leader>j', ':tabn<CR>', nrmp_sil)
+kmap('n', '<leader>h', ':tabp<CR>', nrmp_sil)
+kmap('n', '<leader>l', ':tabn<CR>', nrmp_sil)
 kmap('n', '<leader>q', ':bd<CR>', nrmp_sil)
 kmap({ 'n', 'v' }, '<leader>y', '"+y', nrmp_sil)
 kmap('n', '<leader>p', '"+p', nrmp_sil)
@@ -49,6 +49,10 @@ M.lsp_on_attach = function(_, bufnr)
     nmap('gd', vim.lsp.buf.definition)
     nmap('gD', vim.lsp.buf.declaration)
     nmap('gr', vim.lsp.buf.references)
+
+    kmap('n', '<leader>d', vim.diagnostic.open_float, {
+        noremap = true, silent = true, buffer = bufnr
+    })
 end
 
 M.cmp_keys = {
@@ -62,12 +66,12 @@ M.cmp_keys = {
     snip_jmp_rev = '<S-Tab>'
 }
 
-M.setup_dap = function()
-    kmap('n', '<F5>', ':lua require("dap").continue()<CR>', { silent = true })
-    kmap('n', '<F10>', ':lua require("dap").step_over()<CR>', { silent = true })
-    kmap('n', '<F11>', ':lua require("dap").step_into()<CR>', { silent = true })
-    kmap('n', '<F12>', ':lua require("dap").step_out()<CR>', { silent = true })
-    kmap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { silent = true })
-end
+--M.setup_dap = function()
+--    kmap('n', '<F5>', ':lua require("dap").continue()<CR>', { silent = true })
+--    kmap('n', '<F10>', ':lua require("dap").step_over()<CR>', { silent = true })
+--    kmap('n', '<F11>', ':lua require("dap").step_into()<CR>', { silent = true })
+--    kmap('n', '<F12>', ':lua require("dap").step_out()<CR>', { silent = true })
+--    kmap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { silent = true })
+--end
 
 return M

@@ -78,14 +78,26 @@ require('lazy').setup({
         config = function()
             require('nvim-treesitter.configs').setup({
                 indent = { enable = true },
-                autotag = { enable = true },
+                --autotag = { enable = true },
                 ensure_installed = {
                     'lua', 'python',
-                    'markdown', 'yaml', 'json',
-                    'vim', 'vimdoc'
+                    'vim', 'vimdoc',
+                    'markdown', 'yaml', 'json', 'html', 'css',
+                    'c', 'cpp', 'rust', 'go',
+                    'c_sharp', 'haskell',
+                    'bash', 'make', 'cmake',
+                    'typescript', 'scss'
                 },
                 auto_install = true,
-                highligh = { enable = true }
+                highligh = {
+                    enable = true,
+                    disable = function(lang, _)
+                        if lang == "html" then
+                            return true
+                        end
+                        return false
+                    end
+                }
             })
         end,
         build = ':TSUpdate'
@@ -104,7 +116,9 @@ require('lazy').setup({
         dependencies = {
             'nvim-treesitter/nvim-treesitter'
         },
-        config = {}
+        config = function()
+            require('nvim-ts-autotag').setup()
+        end
     },
 
     {

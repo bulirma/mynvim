@@ -10,6 +10,8 @@ local options = {
 	encoding = 'utf-8',
     errorbells = false,
     hidden = false,
+    spell = false,
+    spelllang = 'en_us',
     splitbelow = true,
     splitright = true,
 	swapfile = false,
@@ -21,7 +23,7 @@ local options = {
 	softtabstop = 4,
 	tabstop = 4,
     wrap = true, -- break long lines
-    
+
     -- search
     incsearch = true,
     ignorecase = false,
