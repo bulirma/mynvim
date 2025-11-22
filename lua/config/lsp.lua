@@ -34,17 +34,17 @@ end
 local lspconfig = require('lspconfig')
 local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup({
-    ensure_installed = vim.tbl_keys(servers)
-})
-mason_lspconfig.setup_handlers({
-    function(server_name)
-        lspconfig[server_name].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-            filetypes = (servers[server_name] or {}).filetypes
-        })
-    end
+    ensure_installed = vim.tbl_keys(servers),
+    handlers = {
+        function(server_name)
+            lspconfig[server_name].setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = servers[server_name],
+                filetypes = (servers[server_name] or {}).filetypes
+            })
+        end
+    }
 })
 
 local cmp = require('cmp')
