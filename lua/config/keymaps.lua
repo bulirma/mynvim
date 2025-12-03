@@ -1,77 +1,71 @@
-local kmap = vim.keymap.set
-local nrmp_sil = {
-	noremap = true,
-	silent = true
-}
-local expr_sil = {
-	expr = true,
-	silent = true
-}
-
-kmap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-kmap('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_sil)
-kmap('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_sil)
-kmap('n', '<leader>t', ':tabnew<CR>', nrmp_sil)
-kmap('n', '<leader>h', ':tabp<CR>', nrmp_sil)
-kmap('n', '<leader>l', ':tabn<CR>', nrmp_sil)
-kmap('n', '<leader>q', ':bd<CR>', nrmp_sil)
-kmap({ 'n', 'v' }, '<leader>y', '"+y', nrmp_sil)
-kmap('n', '<leader>p', '"+p', nrmp_sil)
-kmap('n', '<leader>P', '"+P', nrmp_sil)
-kmap('v', '<', '<gv', nrmp_sil)
-kmap('v', '>', '>gv', nrmp_sil)
-kmap('v', 'J', ":m '>+1<CR>gv=gv", nrmp_sil)
-kmap('v', 'K', ":m '<-2<CR>gv=gv", nrmp_sil)
-kmap('n', '<C-h>', '<C-w>h', nrmp_sil)
-kmap('n', '<C-j>', '<C-w>j', nrmp_sil)
-kmap('n', '<C-k>', '<C-w>k', nrmp_sil)
-kmap('n', '<C-l>', '<C-w>l', nrmp_sil)
-
 local M = {}
 
-M.setup_nvim_tree = function()
-    kmap('n', '<leader>e', ':NvimTreeToggle<CR>', nrmp_sil)
+local kmap = vim.keymap.set
+local nmap_nrsil = function(shortcut, op)
+    kmap('n', shortcut, op, { noremap = true, silent = true })
+end
+local vmap_nrsil = function(shortcut, op)
+    kmap('v', shortcut, op, { noremap = true, silent = true })
+end
+local nmap_exsil = function(shortcut, op)
+    kmap('n', shortcut, op, { expr = true, silent = true })
 end
 
-M.setup_telescope = function(telescope_builtin)
-    kmap('n', '<leader>fb', telescope_builtin.buffers, nrmp_sil)
-    kmap('n', '<leader>ff', telescope_builtin.find_files, nrmp_sil)
-    kmap('n', '<leader>fg', telescope_builtin.live_grep, nrmp_sil)
-    kmap('n', '<leader>ft', telescope_builtin.filetypes, nrmp_sil)
+
+M.setup = function()
+    kmap({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
+
+    nmap_exsil('j', "v:count == 0 ? 'gj' : 'j'")
+    nmap_exsil('k', "v:count == 0 ? 'gk' : 'k'")
+
+    nmap_nrsil('<leader>t', ':tabnew<CR>')
+    nmap_nrsil('<leader>h', ':tabp<CR>')
+    nmap_nrsil('<leader>l', ':tabn<CR>')
+    nmap_nrsil('<leader>q', ':bd<CR>')
+    nmap_nrsil('<leader>d', vim.diagnostic.open_float)
+    nmap_nrsil('<c-h>', '<c-w>h')
+    nmap_nrsil('<c-j>', '<c-w>j')
+    nmap_nrsil('<c-k>', '<c-w>k')
+    nmap_nrsil('<c-l>', '<c-w>l')
+
+    kmap({ 'n', 'v' }, '<leader>y', '"+y', {  noremap = true, silent = true })
+    nmap_nrsil('<leader>p', '"+p')
+    nmap_nrsil('<leader>P', '"+P')
+
+    vmap_nrsil('<', '<gv')
+    vmap_nrsil('>', '>gv')
+    vmap_nrsil('J', '>+1<cr>gv=gv')
+    vmap_nrsil('K', '<-2<cr>gv=gv')
 end
 
-M.lsp_on_attach = function(_, bufnr)
-    local nmap = function(shortcut, cmd)
-        kmap('n', shortcut, cmd, { buffer = bufnr })
+M.setup_telescope = function()
+    local builtin = require('telescope.builtin')
+
+    nmap_nrsil('<leader>ff', builtin.find_files)
+    nmap_nrsil('<leader>fg', builtin.live_grep)
+    nmap_nrsil('<leader>ft', builtin.filetypes)
+    nmap_nrsil('<leader>fb', builtin.buffers)
+    nmap_nrsil('<leader>fd', builtin.diagnostics)
+end
+
+M.setup_lsp_on_attach = function(event)
+    local builtin = require('telescope.builtin')
+
+    local nmap = function(shortcut, op)
+        kmap('n', shortcut, op, { buffer = event.buf })
     end
-    nmap('K', vim.lsp.buf.hover)
-    nmap('<C-k>', vim.lsp.buf.signature_help)
-    nmap('gd', vim.lsp.buf.definition)
-    nmap('gD', vim.lsp.buf.declaration)
-    nmap('gr', vim.lsp.buf.references)
 
-    kmap('n', '<leader>d', vim.diagnostic.open_float, {
-        noremap = true, silent = true, buffer = bufnr
-    })
+    nmap('<leader>sr', builtin.lsp_references)
+    nmap('<leader>si', builtin.lsp_implementations)
+    nmap('<leader>sd', builtin.lsp_implementations)
+    nmap('<leader>sl', builtin.lsp_implementations)
 end
 
-M.cmp_keys = {
-    prev_item = '<C-k>',
-    next_item = '<C-j>',
-    scroll_up_doc = '<C-d>',
-    scroll_down_doc = '<C-f>',
-    complete = '<C-Space>',
-    confirm = '<CR>',
-    snip_jmp = '<Tab>',
-    snip_jmp_rev = '<S-Tab>'
+M.completion_keymaps = {
+    preset = 'default',
+    ['<c-k>'] = { 'select_prev', 'fallback' },
+    ['<c-j>'] = { 'select_next', 'fallback' },
+    ['<cr>'] =  { 'accept', 'fallback' }
 }
-
---M.setup_dap = function()
---    kmap('n', '<F5>', ':lua require("dap").continue()<CR>', { silent = true })
---    kmap('n', '<F10>', ':lua require("dap").step_over()<CR>', { silent = true })
---    kmap('n', '<F11>', ':lua require("dap").step_into()<CR>', { silent = true })
---    kmap('n', '<F12>', ':lua require("dap").step_out()<CR>', { silent = true })
---    kmap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { silent = true })
---end
 
 return M

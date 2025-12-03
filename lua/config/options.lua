@@ -1,28 +1,25 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 local M = {}
 
 local options = {
     -- behavior
     autochdir = false,
     backup = false,
-	encoding = 'utf-8',
+    encoding = 'utf-8',
     errorbells = false,
     hidden = false,
     spell = false,
     spelllang = 'en_us',
     splitbelow = true,
     splitright = true,
-	swapfile = false,
+    swapfile = false,
 
-    -- indentation
-	expandtab = true,
-	shiftwidth = 4,
-	smartindent = true,
-	softtabstop = 4,
-	tabstop = 4,
-    wrap = true, -- break long lines
+    -- indentation	
+    expandtab = true,
+    shiftwidth = 4,
+    smartindent = true,
+    softtabstop = 4,
+    tabstop = 4,
+    wrap = true,
 
     -- search
     incsearch = true,
@@ -30,19 +27,24 @@ local options = {
     smartcase = true,
     hlsearch = true,
 
-    -- appearance
+    -- appearancce
     cmdheight = 1,
     completeopt = 'menuone,noinsert,noselect',
-	number = true,
-	relativenumber = true,
-	scrolloff = 8,
+    number = true,
+    relativenumber = true,
+    scrolloff = 8,
     signcolumn = 'yes',
-	syntax = 'on',
-	termguicolors = true
+    syntax = 'on',
+    termguicolors = true
 }
 
-for k, v in pairs(options) do
+M.setup = function()
+    vim.g.mapleader = ' '
+    vim.g.maplocalleader = ' '
+
+    for k, v in pairs(options) do
 	vim.opt[k] = v
+    end
 end
 
 return M

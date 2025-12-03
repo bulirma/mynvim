@@ -1,5 +1,11 @@
-require('config.options')
-require('config.keymaps')
-require('config.file_extensions')
-require('config.plugins')
-require('config.lsp')
+local M = {}
+
+M.setup = function()
+    require('config.options').setup()
+    require('config.keymaps').setup()
+    local plugins = require('config.plugins')
+    plugins.check_install_lazy()
+    plugins.setup()
+end
+
+return M
