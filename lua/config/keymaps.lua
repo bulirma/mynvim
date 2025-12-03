@@ -55,6 +55,9 @@ M.setup_lsp_on_attach = function(event)
         kmap('n', shortcut, op, { buffer = event.buf })
     end
 
+    nmap('K', vim.lsp.buf.hover)
+    nmap('<c-k>', vim.lsp.buf.signature_help)
+
     nmap('<leader>sr', builtin.lsp_references)
     nmap('<leader>si', builtin.lsp_implementations)
     nmap('<leader>sd', builtin.lsp_implementations)
