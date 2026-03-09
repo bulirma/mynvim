@@ -34,8 +34,8 @@ M.setup = function()
 
     vmap_nrsil('<', '<gv')
     vmap_nrsil('>', '>gv')
-    vmap_nrsil('J', '>+1<cr>gv=gv')
-    vmap_nrsil('K', '<-2<cr>gv=gv')
+    vmap_nrsil('J', ":m '>+1<cr>gv=gv")
+    vmap_nrsil('K', ":m '<-2<cr>gv=gv")
 end
 
 M.setup_telescope = function()

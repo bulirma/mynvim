@@ -32,7 +32,8 @@ M.setup = function()
         require_plugin('icons'),
         require_plugin('telescope'),
         require_plugin('completion'),
-        require_plugin('lsp')
+        require_plugin('lsp'),
+        require_plugin('copilot')
     })
 end
 

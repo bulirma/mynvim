@@ -1,5 +1,5 @@
 local config = function()
-    require('nvim-treesitter.configs').setup({
+    require('nvim-treesitter.config').setup({
         indent = { enable = true },
         ensure_installed = {
             'lua', 'python'

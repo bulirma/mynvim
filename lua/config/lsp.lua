@@ -1,6 +1,11 @@
 local M = {}
 
-local servers = {}
+local servers = {
+    lua_ls = {},
+    pylsp = {},
+    clangd = {},
+    csharp_ls = {}
+}
 
 local sign_type = vim.diagnostic.severity
 
@@ -37,6 +42,20 @@ M.setup = function()
                 lspconfig[server_name].setup(server)
             end
         }
+    })
+
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
+        once = true,
+        callback = function()
+            local mason_registry = require('mason-registry')
+            if not mason_registry.is_installed('tree-sitter-cli') then
+                vim.defer_fn(function()
+                    mason_registry.refresh()
+                    mason_registry.get_package('tree-sitter-cli'):install()
+                end, 100)
+            end
+        end,
     })
 end
 
