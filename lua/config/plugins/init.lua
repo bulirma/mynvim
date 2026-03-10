@@ -30,7 +30,7 @@ M.setup = function()
         require_plugin('kanagawa-colorscheme'),
         require_plugin('lualine'),
         require_plugin('icons'),
-        require_plugin('telescope'),
+        require_plugin('fzf'),
         require_plugin('completion'),
         require_plugin('lsp'),
         require_plugin('copilot')

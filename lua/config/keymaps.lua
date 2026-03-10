@@ -38,18 +38,19 @@ M.setup = function()
     vmap_nrsil('K', ":m '<-2<cr>gv=gv")
 end
 
-M.setup_telescope = function()
-    local builtin = require('telescope.builtin')
+M.setup_fzf = function()
+    local fzf = require('fzf-lua')
 
-    nmap_nrsil('<leader>ff', builtin.find_files)
-    nmap_nrsil('<leader>fg', builtin.live_grep)
-    nmap_nrsil('<leader>ft', builtin.filetypes)
-    nmap_nrsil('<leader>fb', builtin.buffers)
-    nmap_nrsil('<leader>fd', builtin.diagnostics)
+    nmap_nrsil('<leader>ff', fzf.files)
+    nmap_nrsil('<leader>fg', fzf.live_grep)
+    nmap_nrsil('<leader>ft', fzf.filetypes)
+    nmap_nrsil('<leader>fb', fzf.buffers)
+    nmap_nrsil('<leader>fd', fzf.diagnostics_document)
+    nmap_nrsil('<leader>fD', fzf.diagnostics_workspace)
 end
 
 M.setup_lsp_on_attach = function(event)
-    local builtin = require('telescope.builtin')
+    local fzf = require('fzf-lua')
 
     local nmap = function(shortcut, op)
         kmap('n', shortcut, op, { buffer = event.buf })
@@ -58,10 +59,10 @@ M.setup_lsp_on_attach = function(event)
     nmap('K', vim.lsp.buf.hover)
     nmap('<c-k>', vim.lsp.buf.signature_help)
 
-    nmap('<leader>sr', builtin.lsp_references)
-    nmap('<leader>si', builtin.lsp_implementations)
-    nmap('<leader>sd', builtin.lsp_implementations)
-    nmap('<leader>sl', builtin.lsp_implementations)
+    nmap('<leader>sr', fzf.lsp_references)
+    nmap('<leader>si', fzf.lsp_implementations)
+    nmap('<leader>sd', fzf.lsp_definitions)
+    nmap('<leader>sl', fzf.lsp_declarations)
 end
 
 M.completion_keymaps = {
