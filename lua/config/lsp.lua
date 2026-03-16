@@ -1,7 +1,14 @@
 local M = {}
 
 local servers = {
-    lua_ls = {},
+    lua_ls = {
+        settings = {
+            Lua = {
+                diagnostics = { globals = { 'vim' } },
+                telemetry = { enable = false }
+            }
+        }
+    },
     pylsp = {},
     clangd = {},
     csharp_ls = {}
@@ -35,14 +42,30 @@ M.setup = function()
     require('mason-lspconfig').setup({
         ensure_installed = vim.tbl_keys(servers),
         automatic_installation = false,
-        handlers = {
-            function(server_name)
-                local server = servers[server_name] or {}
-                server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                lspconfig[server_name].setup(server)
-            end
-        }
+        --handlers = {
+        --    function(server_name)
+        --        local server = servers[server_name] or {}
+        --        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        --        lspconfig[server_name].setup(server)
+        --    end
+        --}
     })
+
+    for name, settings in pairs(servers) do
+        local default = vim.lsp.config[name]
+
+        if default then
+            local merged = vim.tbl_deep_extend('force', {}, default, {
+                capabilities = vim.tbl_deep_extend('force', {}, capabilities, settings.capabilities or {})
+            })
+            vim.tbl_deep_extend('force', merged, settings)
+            vim.lsp.config(name, merged)
+        else
+            vim.notify('No default config found for ' .. name .. ' in nvim-lspconfig', vim.log.levels.WARN)
+        end
+
+        vim.lsp.enable(name)
+    end
 
     vim.api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',

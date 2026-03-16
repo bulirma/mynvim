@@ -15,6 +15,8 @@ end
 M.setup = function()
     kmap({ 'n', 'v' }, '<space>', '<nop>', { silent = true })
 
+    kmap('t', '<esc>', '<c-\\><c-n>', { noremap = true, silent = true })
+
     nmap_exsil('j', "v:count == 0 ? 'gj' : 'j'")
     nmap_exsil('k', "v:count == 0 ? 'gk' : 'k'")
 
