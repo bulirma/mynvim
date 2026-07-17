@@ -35,7 +35,8 @@ local options = {
     scrolloff = 8,
     signcolumn = 'yes',
     syntax = 'on',
-    termguicolors = true
+    termguicolors = true,
+    colorcolumn = '97'
 }
 
 M.setup = function()

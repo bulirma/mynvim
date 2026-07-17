@@ -2,7 +2,7 @@ return {
     'saghen/blink.cmp',
     event = 'VimEnter',
     version = '1.*',
-    dependencies = { 'fang2hou/blink-copilot' },
+    dependencies = { 'saghen/blink.compat' },
     opts = {
         keymap = require('config.keymaps').completion_keymaps,
         appearance = {
@@ -15,13 +15,19 @@ return {
             }
         },
         sources = {
-            default = { 'lsp', 'path', 'buffer', 'cmdline', 'copilot' },
+            default = { 'lsp', 'path', 'buffer', 'cmdline', 'supermaven' },
             providers = {
-                copilot = {
-                    name = 'copilot',
-                    module = 'blink-copilot',
-                    score_offset = 100,
-                    async = true
+                --copilot = {
+                --    name = 'copilot',
+                --    module = 'blink-copilot',
+                --    score_offset = 100,
+                --    async = true
+                --}
+                supermaven = {
+                    name = 'supermaven',
+                    module = 'blink.compat.source',
+                    opts = {},
+                    score_offset = 100
                 }
             }
         },

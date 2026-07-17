@@ -33,7 +33,7 @@ M.setup = function()
         require_plugin('fzf'),
         require_plugin('completion'),
         require_plugin('lsp'),
-        require_plugin('copilot')
+        require_plugin('supermaven')
     })
 end
 
